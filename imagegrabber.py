@@ -24,7 +24,6 @@ class colorize:
     GREEN="\033[1;0;32m"
 
 def imagegrabber(url, fname, dir):
-
     print("image grab url=%s" % url)
     proxy = getProxy()
     header = {'User-Agent': str(ua.random)}
@@ -68,7 +67,7 @@ def getProxy():
         getProxy()
 
 
-def scanurl(url):
+def scanurl(url,dir):
     header = {'User-Agent': str(ua.random)}
     response = requests.get(url, headers=header)
     soup = BeautifulSoup(response.text, 'lxml')
@@ -106,14 +105,13 @@ def run():
             if url == "quit":
                 exit()
             dir = input("Please enter dir or enter to automatically create one: ")
-
         if len(dir) == 0:
             dir = getDir(url)
             if not os.path.exists(dir):
                 os.mkdir(dir)
-            else:
-                if not os.path.exists(dir):
-                    os.mkdir(dir)
+        else:
+            if not os.path.exists(dir):
+                os.mkdir(dir)
     else:
         url = sys.argv[1]
 
@@ -125,6 +123,7 @@ def run():
             dir = getDir(url)
             if not os.path.exists(dir):
                 os.mkdir(dir)
+    scanurl(url,dir)
     print("Scan complete")
     print("------------------------------------")
     return "complete"
