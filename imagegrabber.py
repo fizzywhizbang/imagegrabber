@@ -97,15 +97,15 @@ def getDir(url):
 
 def run():
     if len(sys.argv) == 1:
-        url = input("Please Enter URL or type quit to quit:")
+        url = input("Please Enter URL or type quit to quit: ")
         if len(url) < 1:
-            url = input("Please Enter URL or type quit to quit:")
+            url = input("Please Enter URL or type quit to quit: ")
             if url == "quit":
                 exit()
         else:
             if url == "quit":
                 exit()
-            dir = input("Please enter dir or enter to automatically create one")
+            dir = input("Please enter dir or enter to automatically create one: ")
 
         if len(dir) == 0:
             dir = getDir(url)
