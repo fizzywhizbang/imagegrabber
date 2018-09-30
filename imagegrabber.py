@@ -76,6 +76,7 @@ def scanurl(url):
         if link['href'].endswith(fileList):
             fname = getName(link['href'])
             imagegrabber(link['href'], fname, dir)
+    return "complete"
 
 def getName(url):
     fields = urlsplit(url)._asdict()  # convert to absolute URLs and split
@@ -93,20 +94,44 @@ def getDir(url):
     last = len(fname) - 1
     return fname[last]
 
-url = sys.argv[1]
 
-if len(sys.argv) == 3:
-    dir = sys.argv[2]
-    if not os.path.exists(dir):
-        os.mkdir(dir)
-else:
-    dir = getDir(url)
-    if not os.path.exists(dir):
-        os.mkdir(dir)
+def run():
+    if len(sys.argv) == 1:
+        url = input("Please Enter URL or type quit to quit:")
+        if len(url) < 1:
+            url = input("Please Enter URL or type quit to quit:")
+            if url == "quit":
+                exit()
+        else:
+            if url == "quit":
+                exit()
+            dir = input("Please enter dir or enter to automatically create one")
+
+        if len(dir) == 0:
+            dir = getDir(url)
+            if not os.path.exists(dir):
+                os.mkdir(dir)
+            else:
+                if not os.path.exists(dir):
+                    os.mkdir(dir)
+    else:
+        url = sys.argv[1]
+
+        if len(sys.argv) == 3:
+            dir = sys.argv[2]
+            if not os.path.exists(dir):
+                os.mkdir(dir)
+        else:
+            dir = getDir(url)
+            if not os.path.exists(dir):
+                os.mkdir(dir)
+    print("Scan complete")
+    print("------------------------------------")
+    return "complete"
 
 fileList = ('jpg','JPG','jpeg','JPEG','mp4','m4v','mov','wmv')
 
+returnval = run()
 
-scanurl(url)
-#returnval = imagegrabber(url, fname[last], dir)
-#print(returnval)
+while returnval:
+    run()
